@@ -51,15 +51,6 @@
 
     <nav class="side-nav">
       <span class="side-nav-section">Main</span>
-      <button type="button" class="side-link active" data-view="overview">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <rect x="3" y="3" width="7" height="9" rx="1.5"/>
-          <rect x="14" y="3" width="7" height="5" rx="1.5"/>
-          <rect x="14" y="12" width="7" height="9" rx="1.5"/>
-          <rect x="3" y="16" width="7" height="5" rx="1.5"/>
-        </svg>
-        Overview
-      </button>
       <button type="button" class="side-link" data-view="key">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
           <circle cx="8" cy="15" r="3.2"/>
@@ -90,17 +81,6 @@
         Support
       </button>
     </nav>
-
-    <div class="side-foot">
-      <a href="index.html" class="side-link" data-logout>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-          <path d="M16 17l5-5-5-5"/>
-          <path d="M21 12H9"/>
-        </svg>
-        Log out
-      </a>
-    </div>
   </aside>
 
   <main class="dash-main">
@@ -112,21 +92,13 @@
           </svg>
         </button>
         <div class="dash-title">
-          <h1 id="viewTitle">Overview</h1>
-          <p id="viewSubtitle">Status dan statistik akun kamu.</p>
+          <h1 id="viewTitle">API Key</h1>
+          <p id="viewSubtitle">Key ini menghubungkan bot kamu ke dashboard ini.</p>
         </div>
-      </div>
-      <div class="topbar-actions">
-        <button class="btn btn-ghost btn-sm" id="refreshBtn">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-          Refresh
-        </button>
       </div>
     </div>
 
-    <section class="dash-view" data-view="overview"></section>
-
-    <section class="dash-view" data-view="key" hidden>
+    <section class="dash-view" data-view="key">
       <div class="panel" style="max-width:600px;">
         <div class="panel-head"><h2>API Key kamu</h2></div>
         <span class="balance-label" style="display:block; margin-bottom:8px;">Key aktif</span>
@@ -139,7 +111,6 @@
           Jangan bagikan key ini ke siapapun.
         </p>
         <button type="button" class="btn btn-ghost btn-sm" id="regenerateKeyBtn">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
           Regenerate key
         </button>
       </div>
@@ -180,7 +151,6 @@
         <p class="muted-text" style="margin-bottom:24px;">
           Hubungi kami lewat salah satu kanal di bawah. Kami biasanya membalas dalam beberapa jam.
         </p>
-
         <div class="support-contacts">
           <a href="https://wa.link/3l3hac" target="_blank" rel="noopener" class="support-contact-row">
             <div class="support-contact-icon" style="background:rgba(37,211,102,0.12); color:#25d366;">
