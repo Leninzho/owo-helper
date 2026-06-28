@@ -10,28 +10,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css" />
 <script>
-  // If the user is already authorized, skip the landing entirely and
-  // go straight to the dashboard. This prevents the OAuth redirect loop.
   (function () {
-    // Handle OAuth implicit-flow redirect (#access_token=...)
     var hash = window.location.hash.slice(1);
+
     if (hash) {
       var p = new URLSearchParams(hash);
       var token = p.get("access_token");
       var expiresIn = parseInt(p.get("expires_in") || "604800", 10);
+
       if (token) {
         localStorage.setItem("owofarm_token", token);
         localStorage.setItem("owofarm_token_expiry", String(Date.now() + expiresIn * 1000));
         history.replaceState(null, "", window.location.pathname);
         window.location.replace("dashboard.html");
-        return;
       }
-    }
-    // Already authorized? Go straight to dashboard, don't show landing.
-    var t   = localStorage.getItem("owofarm_token");
-    var exp = parseInt(localStorage.getItem("owofarm_token_expiry") || "0", 10);
-    if (t && Date.now() < exp) {
-      window.location.replace("dashboard.html");
     }
   })();
 </script>
