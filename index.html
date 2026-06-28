@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>OwoFarm — OwO Account Dashboard</title>
+<meta name="description" content="OwoFarm gives you a live dashboard for every OwO account you connect — track stats, manage keys, and monitor activity in one place." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css" />
+<script>
+  (function () {
+    const hash = window.location.hash.slice(1);
+    if (!hash) return;
+
+    const p = new URLSearchParams(hash);
+    const token = p.get("access_token");
+    const expiresIn = parseInt(p.get("expires_in") || "604800", 10);
+
+    if (token) {
+      localStorage.setItem("owofarm_token", token);
+      localStorage.setItem("owofarm_token_expiry", String(Date.now() + expiresIn * 1000));
+      history.replaceState(null, "", window.location.pathname);
+      window.location.replace("dashboard.html");
+    }
+  })();
+</script>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="brand">
+    <svg class="brand-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="brandGrad" x1="6" y1="6" x2="26" y2="28" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#5b7dff"/>
+          <stop offset="0.55" stop-color="#8b5cf6"/>
+          <stop offset="1" stop-color="#2ee8ff"/>
+        </linearGradient>
+      </defs>
+      <rect x="5.5" y="5.5" width="21" height="21" rx="8" fill="url(#brandGrad)" opacity="0.95"/>
+      <path d="M12 20.5c2.1-2.3 4.1-4.2 8-5.5-1.2 3.8-3.6 7.4-8 9-1.8.7-3.8.1-4.6-1.3-.8-1.5-.3-3.5 1.6-4.4 1-.5 1.8-.6 3-.4Z" fill="rgba(255,255,255,0.85)"/>
+      <path d="M14.5 23.5c.7-3.7 2.8-7 6.2-9.8" stroke="rgba(255,255,255,0.35)" stroke-width="1.6" stroke-linecap="round"/>
+      <circle cx="18.9" cy="10.8" r="1.3" fill="#dbeafe"/>
+    </svg>
+    owofarm
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="#features">Features</a>
+    <a href="#how-it-works">How it works</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="nav-right">
+    <button class="nav-toggle" aria-label="Toggle menu" id="navToggle">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<canvas id="heroCanvas" aria-hidden="true"></canvas>
+
+<section class="hero">
+  <div class="hero-inner container">
+    <div class="hero-copy hero-copy-centered">
+      <div class="hero-eyebrow">beta — live now</div>
+      <h1 class="hero-heading">One dashboard.<br><span class="grad">Every account.</span></h1>
+      <p class="hero-sub">Connect your OwO accounts and track stats, activity, and key management all from one place. No scripts, no config files — just log in and see what's happening.</p>
+      <div class="hero-actions">
+        <a
+          href="https://discord.com/oauth2/authorize?client_id=1499429025867632680&response_type=token&redirect_uri=https%3A%2F%2Fowohelper.vercel.app%2F&scope=identify"
+          class="btn btn-primary"
+          id="heroCtaBtn"
+        >
+          Connect with Discord
+        </a>
+        <a href="#features" class="btn btn-ghost">See features</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="features">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">What it does</span>
+      <h2>Everything you need to stay on top of your accounts</h2>
+      <p>Connect once. OwoFarm keeps track of every account you add and reports back in plain numbers.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+        </div>
+        <h3>Unified dashboard</h3>
+        <p>All your accounts in one view — status, stats, and activity at a glance without switching between windows.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="15" r="3.2"/><path d="M10.3 12.7 20 3M16 7l3 3M13 10l2 2"/></svg>
+        </div>
+        <h3>Secure key management</h3>
+        <p>Generate, view, and rotate API keys for each connected account without touching any config files manually.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>
+        </div>
+        <h3>Live activity feed</h3>
+        <p>See what each account is doing in real time — results and rewards show up the moment they happen.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Multi-account control</h3>
+        <p>Manage as many accounts as you run from a single login — each tracked independently, no mixing.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/></svg>
+        </div>
+        <h3>Session health monitoring</h3>
+        <p>If an account stalls or needs attention, you'll see it flagged on the dashboard right away.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg>
+        </div>
+        <h3>Billing &amp; balance</h3>
+        <p>Track your OwoFarm balance and full transaction history in one place, in Rupiah.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<section class="section section-tight" id="how-it-works">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">Setup</span>
+      <h2>Up and running in minutes</h2>
+      <p>No installation, no config files. Just connect and you're in.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num mono">01</div>
+        <h3>Log in with Discord</h3>
+        <p>Authorize access and come back to the site automatically.</p>
+      </div>
+      <div class="step">
+        <div class="step-num mono">02</div>
+        <h3>Open your dashboard</h3>
+        <p>See stats, activity, and account health update in real time.</p>
+      </div>
+      <div class="step">
+        <div class="step-num mono">03</div>
+        <h3>Manage your account</h3>
+        <p>Use the dashboard to monitor billing, keys, and future features.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section cta-band" id="contact">
+  <div class="container cta-inner">
+    <h2>Ready to connect?</h2>
+    <p>Free to start. Connect your first account in under a minute.</p>
+    <a
+      href="https://discord.com/oauth2/authorize?client_id=1499429025867632680&response_type=token&redirect_uri=https%3A%2F%2Fowohelper.vercel.app%2F&scope=identify"
+      class="btn btn-primary"
+      id="footerCtaBtn"
+    >
+      Connect with Discord
+    </a>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <a href="index.html" class="brand">
+          <svg class="brand-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="brandGradFooter" x1="6" y1="6" x2="26" y2="28" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#5b7dff"/>
+                <stop offset="0.55" stop-color="#8b5cf6"/>
+                <stop offset="1" stop-color="#2ee8ff"/>
+              </linearGradient>
+            </defs>
+            <rect x="5.5" y="5.5" width="21" height="21" rx="8" fill="url(#brandGradFooter)" opacity="0.95"/>
+            <path d="M12 20.5c2.1-2.3 4.1-4.2 8-5.5-1.2 3.8-3.6 7.4-8 9-1.8.7-3.8.1-4.6-1.3-.8-1.5-.3-3.5 1.6-4.4 1-.5 1.8-.6 3-.4Z" fill="rgba(255,255,255,0.85)"/>
+            <path d="M14.5 23.5c.7-3.7 2.8-7 6.2-9.8" stroke="rgba(255,255,255,0.35)" stroke-width="1.6" stroke-linecap="round"/>
+            <circle cx="18.9" cy="10.8" r="1.3" fill="#dbeafe"/>
+          </svg>
+          owofarm
+        </a>
+        <p class="footer-desc">OwO account dashboard. Not affiliated with OwO or Discord.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Product</h4>
+          <a href="#features">Features</a>
+          <a href="#how-it-works">How it works</a>
+          <a href="dashboard.html">Dashboard</a>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <a href="https://wa.link/3l3hac" target="_blank" rel="noopener">WhatsApp</a>
+          <a href="#">Discord — leninzho</a>
+          <a href="#">Status</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="#">Terms</a>
+          <a href="#">Privacy</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 OwoFarm. Built for accounts you own and control.</span>
+      <span>v0.1.0 — beta</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
