@@ -223,7 +223,6 @@ function initSidebar() {
 }
 
 const VIEW_META = {
-  overview: { title: "Overview", subtitle: "Status dan statistik akun kamu." },
   key: { title: "API Key", subtitle: "Key ini menghubungkan bot kamu ke dashboard ini." },
   billing: { title: "Billing", subtitle: "Saldo dan riwayat transaksi kamu." },
   settings: { title: "Settings", subtitle: "Pengaturan akun." },
@@ -369,17 +368,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     initKeyView();
     initSidebar();
     initSidebarNav();
-    showView("overview");
-
-    document.querySelector("[data-logout]")?.addEventListener("click", (e) => {
-      e.preventDefault();
-      AUTH.clear();
-      window.location.replace("index.html");
-    });
-
-    document.getElementById("refreshBtn")?.addEventListener("click", async () => {
-      const d = await fetchDashboardData();
-      renderOverview(d);
-    });
+    showView("key");
   }
 });
