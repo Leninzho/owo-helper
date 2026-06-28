@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="id">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,21 +11,26 @@
 <link rel="stylesheet" href="styles.css" />
 <script>
   (function () {
-    var session = localStorage.getItem('owofarm_session');
-    if (session) {
-      try {
-        var parsed = JSON.parse(session);
-        if (parsed && parsed.expiresAt && Date.now() < parsed.expiresAt) {
-          window.location.replace('/overview');
-        }
-      } catch (e) {}
+    var hash = window.location.hash.slice(1);
+    if (!hash) return;
+
+    var p = new URLSearchParams(hash);
+    var token = p.get("access_token");
+    var expiresIn = parseInt(p.get("expires_in") || "604800", 10);
+
+    if (token) {
+      localStorage.setItem("owofarm_token", token);
+      localStorage.setItem("owofarm_token_expiry", String(Date.now() + expiresIn * 1000));
+      history.replaceState(null, "", window.location.pathname);
+      window.location.replace("dashboard.html");
     }
   })();
 </script>
 </head>
 <body>
+
 <nav class="topnav">
-  <a href="/in" class="brand">
+  <a href="index.html" class="brand">
     <svg class="brand-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
       <defs>
         <linearGradient id="brandGrad" x1="6" y1="6" x2="26" y2="28" gradientUnits="userSpaceOnUse">
@@ -41,11 +46,13 @@
     </svg>
     owofarm
   </a>
+
   <div class="nav-links" id="navLinks">
     <a href="#features">Features</a>
     <a href="#how-it-works">How it works</a>
     <a href="#contact">Contact</a>
   </div>
+
   <div class="nav-right">
     <button class="nav-toggle" aria-label="Toggle menu" id="navToggle">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
@@ -62,7 +69,13 @@
       <h1 class="hero-heading">One dashboard.<br><span class="grad">Every account.</span></h1>
       <p class="hero-sub">Connect your OwO accounts and track stats, activity, and key management all from one place. No scripts, no config files — just log in and see what's happening.</p>
       <div class="hero-actions">
-        <a href="/api/auth/discord/start" class="btn btn-primary" id="heroCtaBtn">Connect with Discord</a>
+        <a
+          href="https://discord.com/oauth2/authorize?client_id=1499429025867632680&response_type=code&redirect_uri=https%3A%2F%2Fowohelper.vercel.app%2F&scope=identify"
+          class="btn btn-primary"
+          id="heroCtaBtn"
+        >
+          Connect with Discord
+        </a>
         <a href="#features" class="btn btn-ghost">See features</a>
       </div>
     </div>
@@ -76,6 +89,7 @@
       <h2>Everything you need to stay on top of your accounts</h2>
       <p>Connect once. OwoFarm keeps track of every account you add and reports back in plain numbers.</p>
     </div>
+
     <div class="feature-grid">
       <div class="feature-card">
         <div class="feature-icon">
@@ -140,18 +154,18 @@
     <div class="steps">
       <div class="step">
         <div class="step-num mono">01</div>
-        <h3>Connect with Discord</h3>
-        <p>Log in securely through Discord OAuth — no passwords, no token pasting, no manual setup.</p>
+        <h3>Log in with Discord</h3>
+        <p>Authorize access and come back to the site automatically.</p>
       </div>
       <div class="step">
         <div class="step-num mono">02</div>
-        <h3>Link your accounts</h3>
-        <p>Add each OwO account you want to track. Each one gets its own key and dashboard space.</p>
+        <h3>Open your dashboard</h3>
+        <p>See stats, activity, and account health update in real time.</p>
       </div>
       <div class="step">
         <div class="step-num mono">03</div>
-        <h3>Check your dashboard</h3>
-        <p>See stats, activity, and account health update in real time — all from one screen.</p>
+        <h3>Manage your account</h3>
+        <p>Use the dashboard to monitor billing, keys, and future features.</p>
       </div>
     </div>
   </div>
@@ -161,7 +175,13 @@
   <div class="container cta-inner">
     <h2>Ready to connect?</h2>
     <p>Free to start. Connect your first account in under a minute.</p>
-    <a href="/api/auth/discord/start" class="btn btn-primary" id="footerCtaBtn">Connect with Discord</a>
+    <a
+      href="https://discord.com/oauth2/authorize?client_id=1499429025867632680&response_type=code&redirect_uri=https%3A%2F%2Fowohelper.vercel.app%2F&scope=identify"
+      class="btn btn-primary"
+      id="footerCtaBtn"
+    >
+      Connect with Discord
+    </a>
   </div>
 </section>
 
@@ -169,7 +189,7 @@
   <div class="container">
     <div class="footer-top">
       <div>
-        <a href="/in" class="brand">
+        <a href="index.html" class="brand">
           <svg class="brand-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
             <defs>
               <linearGradient id="brandGradFooter" x1="6" y1="6" x2="26" y2="28" gradientUnits="userSpaceOnUse">
@@ -192,7 +212,7 @@
           <h4>Product</h4>
           <a href="#features">Features</a>
           <a href="#how-it-works">How it works</a>
-          <a href="/overview">Dashboard</a>
+          <a href="dashboard.html">Dashboard</a>
         </div>
         <div class="footer-col">
           <h4>Support</h4>
